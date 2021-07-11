@@ -1,2 +1,2 @@
 # WLED-MQTTStreamer
-Stream data to all the WLEDs
+This is a demo implementation to stream color data to WLED mqtt_stream usermod
