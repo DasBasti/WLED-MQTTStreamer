@@ -38,47 +38,55 @@ def on_message(client, userdata, msg):
     if j.get("message")[0:4] == "!pcb":
         image = bytearray(64*4)
         b=0
-        for p in j.get("message")[4:]:
-            if p == ' ':
-                continue
-            elif p == 'w':
-                image[b]=255
-                image[b+1]=255
-                image[b+2]=255
-                image[b+3]=0
-            elif p == 'k':
-                image[b]=0
-                image[b+1]=0
-                image[b+2]=0
-                image[b+3]=0
-            elif p == 'b':
-                image[b]=0
-                image[b+1]=0
-                image[b+2]=127
-                image[b+3]=0
-            elif p == 'r':
-                image[b]=127
-                image[b+1]=0
-                image[b+2]=0
-                image[b+3]=0
-            elif p == 'g':
-                image[b]=0
-                image[b+1]=127
-                image[b+2]=0
-                image[b+3]=0
-            elif p == 'y':
-                image[b]=127
-                image[b+1]=127
-                image[b+2]=0
-                image[b+3]=0
-            elif p == 'c':
-                image[b]=0
-                image[b+1]=127
-                image[b+2]=127
-                image[b+3]=0
-            b+=4
-            if b > 4*64:
-                break
+        try:
+            for p in j.get("message")[4:]:
+                if p == ' ':
+                    continue
+                elif p == 'w':
+                    image[b]=255
+                    image[b+1]=255
+                    image[b+2]=255
+                    image[b+3]=0
+                elif p == 'k':
+                    image[b]=0
+                    image[b+1]=0
+                    image[b+2]=0
+                    image[b+3]=0
+                elif p == 'b':
+                    image[b]=0
+                    image[b+1]=0
+                    image[b+2]=127
+                    image[b+3]=0
+                elif p == 'r':
+                    image[b]=127
+                    image[b+1]=0
+                    image[b+2]=0
+                    image[b+3]=0
+                elif p == 'g':
+                    image[b]=0
+                    image[b+1]=127
+                    image[b+2]=0
+                    image[b+3]=0
+                elif p == 'y':
+                    image[b]=127
+                    image[b+1]=127
+                    image[b+2]=0
+                    image[b+3]=0
+                elif p == 'c':
+                    image[b]=0
+                    image[b+1]=127
+                    image[b+2]=127
+                    image[b+3]=0
+                elif p == 'm':
+                    image[b]=127
+                    image[b+1]=0
+                    image[b+2]=127
+                    image[b+3]=0
+                b+=4
+                if b > 4*64:
+                    break
+        except:
+            mqtt_client.publish("chat/out", "Fehler im !pcb String!")
         mqtt_client.publish("pcb/all/stream", payload=image)
 
 mqtt_client = mqtt.Client()
